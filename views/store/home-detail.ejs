@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+   
+  <%- include('../../partials/header') %>
+  
+<h1>Home details</h1>
+       <li class="bg-white rounded-xl shadow-md p-4 border border-gray-200">
+
+           <div class="font-semibold text-lg">  <%= home.homeName %> </div>
+           <div class="text-gray-700"> <%= home.homeprice %> </div>
+           <div class="text-yellow-500"> <%= home.homeRating %> </div>
+
+<button type="button" style="background-color: #f59e0b; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.75rem; border: none; cursor: pointer;">BOOK</button>
+
+<%- include('../../partials/favourite.ejs', { home: home }) %>
+
+            </li>
+
+    
+   
+</body>
+</html>

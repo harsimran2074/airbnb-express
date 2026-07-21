@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+   <meta charset="UTF-8">
+
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <title>Airbnb Homes</title>
+
+   <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+
+   
+
+ <%- include('../../partials/header') %>
+<body style="background-color: #f3f4f6; min-height: 100vh;">
+
+   <header class="mb-8">
+
+      <h1 >Here are our registered homes</h1>
+
+   </header>
+   <main class="flex flex-col items-center">
+
+
+      <ul class="w-full max-w-xl space-y-4">
+
+         <% homeBody.forEach(home => { %>
+
+            <li class="bg-white rounded-xl shadow-md p-4 border border-gray-200">
+
+           <div class="font-semibold text-lg">  <%= home.homeName %> </div>
+           <div class="text-gray-700"> <%= home.homeprice %> </div>
+           <div class="text-yellow-500"> <%= home.homeRating %> </div>
+<button type="button" style="background-color: #f59e0b; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.75rem; border: none; cursor: pointer;">Delete</button>
+<a href="host/edit-home<%= home.id %>?editing = true">
+<button type="button" style="background-color: #60a5fa; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.75rem; border: none; cursor: pointer; margin-left: 0.5rem;" >Edit</button></a>
+            </li>
+
+         <% }) %>
+
+      </ul>
+
+   </main>
+
+
+
+</body>
+
+
+
+</html>
+

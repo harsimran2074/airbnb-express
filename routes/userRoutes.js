@@ -1,7 +1,7 @@
 const express = require('express');
-const path = require("path");
-const rootDir = require('../utils/pathUtils.js')
 const userRouter = express.Router();
+const userController = require("../controllers/store/userController");
+
 
 const {homeBody} = require('./hostRoutes');
 userRouter.use('/', (req, res,next) => {
@@ -9,9 +9,12 @@ userRouter.use('/', (req, res,next) => {
 next();
 })
 
-userRouter.get('/', (req, res) => {
-  console.log(homeBody);
-  res.render('home',{homeBody : homeBody});
-});
+userRouter.get('/',userController.userHome);
+userRouter.get('/favourite-list',userController.getFavouriteList);
+userRouter.post('/favourite-list',userController.postFavouriteList);
+// userRouter.get('/home-detail',userController.homeDetail);
+userRouter.get('/booking',userController.booking);
+
+userRouter.get('/homes/:homeId',userController.homeDetail);
 
 module.exports = userRouter;

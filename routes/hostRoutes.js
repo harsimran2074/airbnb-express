@@ -1,20 +1,13 @@
 const express = require("express");
-const path = require("path");
 const hostRouter = express.Router();
-const rootDir = require("../utils/pathUtils.js");
+const hostController = require("../controllers/host/hostController");
 
-hostRouter.get("/add-home", (req, res) => {
-  res.sendFile(path.join(rootDir, "views", "addhome.html"));
-});
-
-const homeBody = [];
-hostRouter.post("/add-home", (req, res) => {
-  homeBody.push(req.body);
-
-  res.sendFile(path.join(__dirname, "/../views/addedhome.html"));
-});
+hostRouter.get("/add-home", hostController.getAddhome);
+hostRouter.post("/add-home",hostController.postAddhome);
+hostRouter.get("/host-home-list",hostController.hosthomelist);
+hostRouter.get("/edit-home/:homeId",hostController.editHome);
 
 module.exports = {
-  hostRouter,
-  homeBody
+  hostRouter
+
 };

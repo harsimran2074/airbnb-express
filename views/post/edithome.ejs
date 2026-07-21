@@ -4,28 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+     <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body>
-    <header><h1>enter the details</h1></header>
+    <%- include('../../partials/header') %>
+    <header style=" padding: 1.5rem;"><h1>enter the details</h1></header>
 
-    <main>
-      <form action="/host/add-home" method="POST">
+    <main style="background-color: #f3f4f6; min-height: 100vh; padding: 1.5rem;">
+      <form action="/host/add-home" method="POST" class="m-1.5">
         <input
           type="text"
           name="houseName"
           placeholder="Enter name of your house"
+          style="border:2px solid black;"
         />
+        <br>
         <input
           type="text"
           name="price"
           placeholder="Enter price of your house"
+          style="border:2px solid black;"
         />
+        <br>
         <input
           type="text"
           name="rating"
           placeholder="rate your house"
+          style="border:2px solid black;"
         />
-        <button type="submit">submit</button>
+   s
+        <button type="submit" style="border:2px solid black;">submit</button>
       </form>
     </main>
   </body>
