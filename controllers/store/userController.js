@@ -1,5 +1,6 @@
 const Home = require("../../models/home");
 const favourite = require('../../models/favourites');
+
 exports.userHome = (req, res) => {
   Home.fetchAll((registeredHomes) =>
     res.render("store/home", { homeBody: registeredHomes }),

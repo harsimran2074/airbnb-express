@@ -5,7 +5,6 @@ const path = require("path");
 module.exports = class favourite{
 
   static addToFavourite(homeId) {
-  
     favourite.getFavourites((favourite) => {
       favourite.push(homeId); 
       const favouritePath = path.join(__dirname, "../data/favourite.json");
@@ -13,6 +12,16 @@ module.exports = class favourite{
         console.log("file is underprocess", error);
       });
     });
+  }
+
+  static removefromfavourite(homeId) {
+    favourite.getFavourites((favourite)=> {
+      favourite = favourite.filter(item => item !== homeId);
+      const favouritePath = path.join(__dirname, "../data/favourite.json");
+      fs.writeFile(favouritePath, JSON.stringify(favourite), (error) => {
+        console.log("file is underprocess", error);
+      })
+    })
   }
 
   static getFavourites(callback) {
