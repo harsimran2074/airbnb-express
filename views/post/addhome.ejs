@@ -4,36 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
     <%- include('../../partials/header') %>
-    <header style=" padding: 1.5rem;"><h1>enter the details</h1></header>
+    <header style="padding: 1.5rem"><h1>enter the details</h1></header>
 
-    <main style="background-color: #f3f4f6; min-height: 100vh; padding: 1.5rem;">
+    <main style="background-color: #f3f4f6; min-height: 100vh; padding: 1.5rem">
       <form action="/host/add-home" method="POST" class="m-1.5">
         <input
           type="text"
           name="houseName"
           placeholder="Enter name of your house"
-          style="border:2px solid black;"
+          style="border: 2px solid black"
         />
-        <br>
+        <br />
         <input
           type="text"
           name="price"
           placeholder="Enter price of your house"
-          style="border:2px solid black;"
+          style="border: 2px solid black"
         />
-        <br>
+        <br />
         <input
           type="text"
           name="rating"
           placeholder="rate your house"
-          style="border:2px solid black;"
+          style="border: 2px solid black"
         />
-   s
-        <button type="submit" style="border:2px solid black;">submit</button>
+
+        <textarea
+          name="description"
+          placeholder="Describe your home"
+          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+        ></textarea>
+
+        <button type="submit" style="border: 2px solid black">submit</button>
       </form>
     </main>
   </body>

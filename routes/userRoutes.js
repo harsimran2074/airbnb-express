@@ -14,6 +14,7 @@ userRouter.get('/favourite-list',userController.getFavouriteList);
 userRouter.post('/favourite-list',userController.postFavouriteList);
 // userRouter.get('/home-detail',userController.homeDetail);
 userRouter.get('/booking',userController.booking);
+userRouter.post('/removeFavourite',userController.removeFavourite);
 
 userRouter.get('/homes/:homeId',userController.homeDetail);
 

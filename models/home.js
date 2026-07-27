@@ -1,56 +1,57 @@
 const fs = require("fs");
 const registeredHomes = [];
+const { ObjectId } = require("mongodb");
 const path = require("path");
-
-
+const db = require("../utils/database");
+const { getdb } = require("../utils/database");
 module.exports = class Home {
-  constructor(homeName, homeprice, homeRating) {
+  constructor(homeName, homeprice, homeRating, description, _id) {
     this.homeName = homeName;
     this.homeprice = homeprice;
     this.homeRating = homeRating;
+    this.description = description;
+    if (_id) {
+      this._id = _id;
+    }
   }
 
   save() {
-    Home.fetchAll((registeredHomes) => {
-      if (this.id) {
-        registeredHomes = registeredHomes.map((home) => (home.id === this.id ? this : home));
-      } else {
-         this.id = Math.random().toString();
-        registeredHomes.push(this);
-       
-      }
-      const homeDataPath = path.join(__dirname, "../data/file.json");
-    
-      fs.writeFile(homeDataPath, JSON.stringify(registeredHomes), (error) => {
-        console.log("file is underprocess", error);
-      });
-    });
+    const updateField = {
+      homeName: this.homeName,
+      homeprice: this.homeprice,
+      homeRating: this.homeRating,
+      description: this.description,
+    };
+
+    if (this._id) {
+      const db = getdb();
+      return db
+        .collection("homes")
+        .updateOne(
+          { _id: new ObjectId(String(this._id)) },
+          { $set: updateField },
+        );
+    }
+    const db = getdb();
+
+    return db.collection("homes").insertOne(this);
   }
 
   static fetchAll(callback) {
-    //readFile.....
-
-   const readDataFile = path.join(__dirname, "../data/file.json");
-    const readFile = fs.readFile(readDataFile, (error, data) => {
-      callback(!error ? JSON.parse(data) : []);
-    });
+    const db = getdb();
+    return db.collection("homes").find().toArray();
   }
 
   static findById(homeId, callback) {
-    this.fetchAll((homes) => {
-      const homeFound = homes.find((home) => homeId === home.id);
-      callback(homeFound);
-    });
+    const db = getdb();
+    return db
+      .collection("homes")
+      .find({ _id: new ObjectId(String(homeId)) })
+      .next();
   }
 
   static deleteById(homeId, callback) {
-    this.fetchAll((homes) => {
-      const homeFound = homes.filter((home) => homeId !== home.id);
-      callback(homeFound);
-  const homeDataPath = path.join(__dirname, "../data/file.json");
-      fs.writeFile(homeDataPath, JSON.stringify(homeFound), (error) => {
-        console.log("file is underprocess", error);
-      });
-    });
+    const db = getdb();
+    return db.collection("homes").deleteOne({ _id: new ObjectId(homeId) });
   }
 };

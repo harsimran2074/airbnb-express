@@ -19,10 +19,12 @@
            <div class="font-semibold text-lg">  <%= home.homeName %> </div>
            <div class="text-gray-700"> <%= home.homeprice %> </div>
            <div class="text-yellow-500"> <%= home.homeRating %> </div>
- <a href="/homes/<%= home.id %>">       
-<button type="button" style="background-color: #11a2ef; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.75rem; border: none; cursor: pointer;">Details</button>
- </a>
-<button type="button" style="background-color: #f59e0b; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.75rem; border: none; cursor: pointer;">BOOK</button>
+           <div class="text-gray-700"><%= home.description %></div>
+
+ <form action="/removeFavourite" method="post">       
+<button type="submit" style="background-color: #db5213; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.75rem; border: none; cursor: pointer;">Remove</button>  
+<input type="hidden" name="homeId" value="<%= home._id %>" />
+</form>
 
             </li>
 

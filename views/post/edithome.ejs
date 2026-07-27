@@ -12,7 +12,7 @@
 
     <main style="background-color: #f3f4f6; min-height: 100vh; padding: 1.5rem;">
       <form action="/host/edit-home" method="POST" class="m-1.5">
-        <input  type="hidden" name="homeId" value="<%= home.id %>"/>
+        <input  type="hidden" name="homeId" value="<%= home._id %>"/>
         <input
           type="text"
           name="houseName"
@@ -36,7 +36,12 @@
           style="border:2px solid black;"
           value="<%= home.homeRating %>"
         />
-   
+   <textarea
+          name="description"
+          placeholder="Describe your home"
+          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+        ><%= home.description %></textarea>
+        
         <button type="submit" style="border:2px solid black;">Edit changes</button>
       </form>
     </main>

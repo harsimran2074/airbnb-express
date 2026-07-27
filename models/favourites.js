@@ -1,44 +1,50 @@
 const fs = require("fs");
 const registeredHomes = [];
 const path = require("path");
+    const db = require("../utils/database");
+const { getdb } = require("../utils/database");
+const { ObjectId } = require("mongodb");
+
+
 
 module.exports = class favourite{
 
-  static addToFavourite(homeId) {
-    favourite.getFavourites((favourite) => {
-      favourite.push(homeId); 
-      const favouritePath = path.join(__dirname, "../data/favourite.json");
-      fs.writeFile(favouritePath, JSON.stringify(favourite), (error) => {
-        console.log("file is underprocess", error);
-      });
-    });
-  }
+constructor(homeId){
+  this.homeId = homeId;
+}
 
-  static removefromfavourite(homeId) {
-    favourite.getFavourites((favourite)=> {
-      favourite = favourite.filter(item => item !== homeId);
-      const favouritePath = path.join(__dirname, "../data/favourite.json");
-      fs.writeFile(favouritePath, JSON.stringify(favourite), (error) => {
-        console.log("file is underprocess", error);
-      })
-    })
+
+save(){
+const db = getdb();
+return db.collection("favourites").find({homeId: this.homeId}).toArray().then((favouriteExist)=>{
+if(!favouriteExist){
+
+
+    const db = getdb();
+    return db.collection('favourites').insertOne(this);
+}else {
+  console.log("already exist");
+}
+
+});
+
+}
+
+
+  static removefromfavourite(delhomeId) {
+   
+       const db = getdb();
+       return db.collection("favourites").deleteOne({ homeId: delhomeId});
   }
 
   static getFavourites(callback) {
     //readFile.....
-
-    const readFavouriteFile = path.join(__dirname, "../data/favourite.json");
-    const readFile = fs.readFile(readFavouriteFile, (error, data) => {
-
-      callback(!error ? JSON.parse(data) : []);
-    });
+const db = getdb();
+return db.collection("favourites").find().toArray();
   }
 
   static findById(homeId , callback){  
-    this.fetchAll(homes=> { 
-     const homeFound =  homes.find(home => homeId === home.id);
-      callback(homeFound);
-    })
+    
 
 };
 
