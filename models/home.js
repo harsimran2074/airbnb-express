@@ -1,57 +1,19 @@
-const fs = require("fs");
-const registeredHomes = [];
-const { ObjectId } = require("mongodb");
-const path = require("path");
-const db = require("../utils/database");
-const { getdb } = require("../utils/database");
-module.exports = class Home {
-  constructor(homeName, homeprice, homeRating, description, _id) {
-    this.homeName = homeName;
-    this.homeprice = homeprice;
-    this.homeRating = homeRating;
-    this.description = description;
-    if (_id) {
-      this._id = _id;
-    }
-  }
+const mongoose = require("mongoose");
+const favourites = require("./favourites");
 
-  save() {
-    const updateField = {
-      homeName: this.homeName,
-      homeprice: this.homeprice,
-      homeRating: this.homeRating,
-      description: this.description,
-    };
+const homeSchema = mongoose.Schema({
+  homeName : {type: String, required: true}, 
+  homeprice : {type: Number, required: true}, 
+  homeRating : {type: Number, required: true}, 
+  description : {type: String, required: true}, 
+ 
 
-    if (this._id) {
-      const db = getdb();
-      return db
-        .collection("homes")
-        .updateOne(
-          { _id: new ObjectId(String(this._id)) },
-          { $set: updateField },
-        );
-    }
-    const db = getdb();
+})
+  
+homeSchema.pre('findOneAndDelete', async function() {
+  console.log('Came to pre hook while deleting a home');
+  const homeId = this.getQuery()._id;
+  await favourites.deleteMany({ homeId: homeId });
+});
 
-    return db.collection("homes").insertOne(this);
-  }
-
-  static fetchAll(callback) {
-    const db = getdb();
-    return db.collection("homes").find().toArray();
-  }
-
-  static findById(homeId, callback) {
-    const db = getdb();
-    return db
-      .collection("homes")
-      .find({ _id: new ObjectId(String(homeId)) })
-      .next();
-  }
-
-  static deleteById(homeId, callback) {
-    const db = getdb();
-    return db.collection("homes").deleteOne({ _id: new ObjectId(homeId) });
-  }
-};
+module.exports = mongoose.model("Home", homeSchema);

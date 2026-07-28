@@ -6,8 +6,7 @@ exports.getAddhome = (req, res) => {
 
 exports.editHome = (req, res) => {
   const homeId = req.params.homeId;
-  Home.findById(homeId).then (home=> {
-    
+  Home.findById(homeId).then((home) => {
     if (!home) {
       return res.redirect("/host-home-list");
     } else {
@@ -17,32 +16,34 @@ exports.editHome = (req, res) => {
 };
 
 exports.postAddhome = (req, res) => {
-  const home = new Home(req.body.houseName, req.body.price, req.body.rating , req.body.description);
-  
-  home.save().then(()=>  {console.log("home added")});
+  const { homeName, homeprice, homeRating, description } = req.body;
+
+  const home = new Home({ homeName, homeprice, homeRating, description });
+
+  home.save().then(() => {
+    console.log("home added");
+  });
   res.render("post/addedhome");
 };
 
 exports.postEditHome = (req, res) => {
-  const home = new Home(
-    req.body.houseName,
-    req.body.price,
-    req.body.rating,
-    req.body.description,
-    req.body.homeId,
-
-  );
-  home._id = req.body.homeId;
-  home.save().then(() => console.log("home edited"));
-  res.redirect("/host/host-home-list");
+  Home.findById(req.body.homeId)
+    .then((home) => {
+      home.houseName = req.body.houseName,
+        home.price = req.body.price,
+        home.rating = req.body.rating,
+        home.description = req.body.description,
+        home.save().then(() => console.log("home edited"));
+      res.redirect("/host/host-home-list");
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.hosthomelist = (req, res) => {
-
-  Home.fetchAll().then(registeredHomes => {
-    console.log(registeredHomes);
+  Home.find()
+    .then((registeredHomes) => {
+      console.log(registeredHomes);
       res.render("post/host-home-list", { homeBody: registeredHomes });
-      
     })
     .catch((err) => {
       console.log(err);
@@ -51,14 +52,14 @@ exports.hosthomelist = (req, res) => {
 
 exports.postdeleteHome = (req, res) => {
   const homeId = req.body.id;
-  Home.deleteById(homeId).then(home => {
+  console.log("came to delete");
+  Home.findByIdAndDelete(homeId).then((home) => {
     console.log(home);
     if (!home) {
       console.log("error occur while deleting home");
       return res.redirect("/host/host-home-list");
     } else {
-    
-      favourite.removefromfavourite(homeId);
+      
       res.redirect("/host/host-home-list");
     }
   });
