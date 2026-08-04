@@ -3,7 +3,11 @@ const favourite = require("../../models/favourites");
 
 exports.userHome = (req, res) => {
   Home.find().then((registeredHomes) => {
-    res.render("store/home", { homeBody: registeredHomes });
+    
+    res.render("store/home", { homeBody: registeredHomes  , isLoggedIn: req.isLoggedIn});
+    // console.log(req.isLoggedIn);
+    // console.log(req.session.isLoggedIn);
+
   });
 };
 
@@ -15,7 +19,7 @@ exports.postFavouriteList = (req, res) => {
   const homeId = req.body.id;
   favourite.findOne({homeId: homeId}).then((favouriteExist) => {
     if(favouriteExist){
-      console.log("favourite exist");
+      console.log("favourite exist" , {isLoggedIn: req.isLoggedIn});
      
     }else{
       const favourites = new favourite({homeId});
@@ -37,7 +41,7 @@ exports.getFavouriteList = (req, res) => {
     const favourite = favourites.map((home)=> home.homeId);
   console.log(favourite);
 
-      res.render("store/favourite-list", { homeBody: favourite });
+      res.render("store/favourite-list", { homeBody: favourite , isLoggedIn: req.isLoggedIn });
     });
 
   }
@@ -55,11 +59,11 @@ exports.homeDetail = (req, res) => {
       res.redirect("/");
     } else {
 
-      res.render("store/home-detail", { home: home });
+      res.render("store/home-detail", { home: home , isLoggedIn: req.isLoggedIn });
     }
   });
 };
 
 exports.booking = (req, res) => {
-  res.render("store/booking");
+  res.render("store/booking" , {isLoggedIn: req.isLoggedIn});
 };

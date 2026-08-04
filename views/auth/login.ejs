@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+<%- include('../../partials/header') %>
+
+  <div class="grid min-h-screen place-items-center px-4 py-10">
+    <div class="w-full max-w-md rounded-3xl border border-slate-800/80 bg-slate-900/95 shadow-2xl shadow-slate-950/40 backdrop-blur-xl">
+      <div class="space-y-6 p-8 sm:p-10">
+        <div class="text-center">
+          <p class="text-sm uppercase tracking-[0.35em] text-slate-400">Welcome Back</p>
+          <h1 class="mt-4 text-3xl font-semibold text-white">Sign in to your account</h1>
+          <p class="mt-2 text-sm text-slate-400">Access your dashboard, manage listings and reservations.</p>
+        </div>
+
+        <% if (errors && errors.length > 0) { %>
+          <div class="space-y-2 rounded-2xl border border-rose-500/20 bg-rose-500/10 p-4 text-rose-100">
+            <% errors.forEach(error => { %>
+              <p class="text-sm"><span class="font-semibold">Error:</span> <%= error %></p>
+            <% }) %>
+          </div>
+        <% } %>
+
+        <form action="/login" method="POST" class="space-y-5">
+          <div>
+            <label class="mb-2 block text-sm font-medium text-slate-300" for="email">Email address</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              value="<%= oldInput.email ? oldInput.email : '' %>"
+              placeholder="you@example.com"
+              class="w-full rounded-2xl border border-slate-800 bg-slate-950/90 px-4 py-3 text-sm text-slate-100 outline-none ring-1 ring-slate-800 transition focus:border-cyan-400 focus:ring-cyan-400/40"
+            />
+          </div>
+
+          <div>
+            <label class="mb-2 block text-sm font-medium text-slate-300" for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              placeholder="Enter your password"
+              class="w-full rounded-2xl border border-slate-800 bg-slate-950/90 px-4 py-3 text-sm text-slate-100 outline-none ring-1 ring-slate-800 transition focus:border-cyan-400 focus:ring-cyan-400/40"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full rounded-2xl bg-gradient-to-r from-cyan-500 to-slate-500 px-4 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:opacity-95"
+          >
+            Sign In
+          </button>
+        </form>
+
+        <p class="text-center text-sm text-slate-500">
+          Don&apos;t have an account?
+          <a href="/signUp" class="font-semibold text-cyan-400 hover:text-cyan-300">Create one</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

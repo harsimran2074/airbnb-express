@@ -4,12 +4,21 @@
     <div class="max-w-7xl mx-auto flex flex-wrap items-center gap-4 px-8 py-4">
       <a href="/" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Home Page</a>
     
-     
+     <% if (isLoggedIn) { %>
       <a href="/favourite-list" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Favourite</a>
      
       <a href="/booking" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Booking</a>
        <a href="/host/host-home-list" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Host Homes</a>
-        <a href="/host/add-home" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Add Home</a>
+<a href="/host/add-home" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Add Home</a>
+
+<a href="/logout" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Logout</a>
+<% } %>
+
+<% if (!isLoggedIn) { %>
+<a href="/login" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Login</a>
+
+<a href="/signUp" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">signUp</a>
+<% } %>
     </div>
   </nav>
-</header>
+</header>        

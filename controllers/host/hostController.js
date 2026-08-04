@@ -1,7 +1,9 @@
 const Home = require("../../models/home");
 const favourite = require("../../models/favourites");
+
 exports.getAddhome = (req, res) => {
-  res.render("post/addhome");
+   
+  res.render("post/addhome",{isLoggedIn: req.isLoggedIn});
 };
 
 exports.editHome = (req, res) => {
@@ -10,7 +12,7 @@ exports.editHome = (req, res) => {
     if (!home) {
       return res.redirect("/host-home-list");
     } else {
-      res.render("post/edithome", { home: home });
+      res.render("post/edithome", { home: home , isLoggedIn: req.isLoggedIn});
     }
   });
 };
@@ -23,7 +25,7 @@ exports.postAddhome = (req, res) => {
   home.save().then(() => {
     console.log("home added");
   });
-  res.render("post/addedhome");
+  res.render("post/addedhome" , { isLoggedIn: req.isLoggedIn});
 };
 
 exports.postEditHome = (req, res) => {
@@ -34,7 +36,7 @@ exports.postEditHome = (req, res) => {
         home.rating = req.body.rating,
         home.description = req.body.description,
         home.save().then(() => console.log("home edited"));
-      res.redirect("/host/host-home-list");
+      res.redirect("/host/host-home-list" , { isLoggedIn: req.isLoggedIn});
     })
     .catch((err) => console.log(err));
 };
@@ -43,7 +45,7 @@ exports.hosthomelist = (req, res) => {
   Home.find()
     .then((registeredHomes) => {
       console.log(registeredHomes);
-      res.render("post/host-home-list", { homeBody: registeredHomes });
+      res.render("post/host-home-list", { homeBody: registeredHomes  , isLoggedIn: req.isLoggedIn});
     })
     .catch((err) => {
       console.log(err);
@@ -57,10 +59,10 @@ exports.postdeleteHome = (req, res) => {
     console.log(home);
     if (!home) {
       console.log("error occur while deleting home");
-      return res.redirect("/host/host-home-list");
+      return res.redirect("/host/host-home-list", { isLoggedIn: req.isLoggedIn});
     } else {
       
-      res.redirect("/host/host-home-list");
+      res.redirect("/host/host-home-list" , { isLoggedIn: req.isLoggedIn});
     }
   });
 };

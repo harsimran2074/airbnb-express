@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up | Airbnb Mongoose</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(180deg, #020617 0%, #111827 100%);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      color: #e2e8f0;
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem 3rem;
+    }
+
+    .signup-card {
+      width: min(100%, 520px);
+      background: #0f172a;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 26px;
+      box-shadow: 0 24px 80px rgba(15, 23, 42, 0.34);
+      padding: 42px 36px;
+      margin: 0 auto;
+    }
+
+    .signup-card h1 {
+      font-size: clamp(1.8rem, 2vw, 2.4rem);
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+      color: #f8fafc;
+    }
+
+    .signup-card p.lead {
+      color: #cbd5e1;
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-field {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      background: #111827;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+      font-size: 1rem;
+      color: #e2e8f0;
+    }
+
+    .form-field::placeholder {
+      color: #94a3b8;
+    }
+
+    .form-field:focus {
+      outline: none;
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.16);
+      background: #0f172a;
+    }
+
+    .radio-group {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: #111827;
+      border: 1px solid #334155;
+    }
+
+    .radio-group p {
+      margin: 0;
+      font-weight: 600;
+      color: #f8fafc;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #cbd5e1;
+      font-size: 0.98rem;
+      cursor: pointer;
+    }
+
+    .radio-option input {
+      accent-color: #38bdf8;
+      width: 1.05rem;
+      height: 1.05rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 16px;
+      background: #38bdf8;
+      color: #0f172a;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 150ms ease, background 150ms ease;
+    }
+
+    .btn-submit:hover {
+      background: #0ea5e9;
+      transform: translateY(-1px);
+    }
+
+    .meta-text {
+      margin-top: 20px;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+
+    .meta-text a {
+      color: #7dd3fc;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .meta-text a:hover {
+      color: #38bdf8;
+    }
+
+    .page-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+  </style>
+</head>
+<body>
+  <%- include('../../partials/header') %>
+  <div class="page-wrapper">
+    <main class="page-container">
+      <section class="signup-card">
+
+      <header>
+        <h1>Create your account</h1>
+        <p class="lead">Join Airbnb Mongoose and start listing or booking homes with a streamlined host experience.</p>
+      </header>
+
+    <form action="/signUp" method="POST" autocomplete="off">
+
+    <% if (errors.length > 0) { %>
+
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+
+    <strong class="font-bold">Error!</strong>
+
+    <span class="block sm:inline">
+        <% errors.forEach(error => { %>
+            <li><%= error %></li>
+        <% }) %>
+    </span>
+
+</div>
+
+<% } %>
+
+
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" 
+        value ="<%= oldInput.firstName ? oldInput.firstName : "" %>" class="form-field" placeholder="Enter your first name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" class="form-field"
+         value ="<%= oldInput.lastName ? oldInput.lastName : "" %>"  placeholder="Enter your last name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" class="form-field" 
+         value ="<%= oldInput.email? oldInput.email : "" %>"  placeholder="you@example.com" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-field" placeholder="Create a secure password" required />
+      </div>
+
+      <div class="form-group">
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirm_password" class="form-field" placeholder="Re-enter your password" required />
+      </div>
+
+      <div class="radio-group">
+        <p>Sign up as</p>
+        <label class="radio-option">
+          <input type="radio" name="userType" value="admin" checked="<%= oldInput.userType === 'admin' ? 'checked' : ''%>"  required />
+          Admin
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="userType" value="guest" checked="<%= oldInput.userType === 'guest' ? 'checked' : ''%>" />
+          Guest
+        </label>
+      </div>
+
+      <button type="submit" class="btn-submit">Create account</button>
+    </form>
+
+    <p class="meta-text">Already have an account? <a href="/login">Log in</a></p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
