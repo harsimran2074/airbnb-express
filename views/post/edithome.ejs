@@ -18,7 +18,8 @@
         </div>
 
         <section class="px-6 py-8 sm:px-10 sm:py-10 lg:px-12">
-          <form action="/host/edit-home" method="POST" class="space-y-6">
+          <form action="/host/edit-home" method="POST" class="space-y-6" 
+          enctype="multipart/form-data">
             <input type="hidden" name="homeId" value="<%= home._id %>" />
 
             <div class="grid gap-6 sm:grid-cols-2">
@@ -64,7 +65,7 @@
               <div>
                 <label class="mb-2 block text-sm font-medium text-slate-300" for="photo">Property image</label>
                 <input
-                  id="photo"
+                  
                   name="photo"
                   type="file"
                   accept="image/*"
@@ -88,7 +89,7 @@
               <p class="text-sm text-slate-400">Review the details before saving changes.</p>
               <button
                 type="submit"
-                class="inline-flex items-center justify-center rounded-2xl bg-sky-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-500/20 transition hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-400"
+                class="bg-amber-500 "
               >
                 Save Changes
               </button>

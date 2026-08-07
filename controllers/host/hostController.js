@@ -1,9 +1,11 @@
 const Home = require("../../models/home");
 const favourite = require("../../models/favourites");
-
+const fs = require("fs");
 exports.getAddhome = (req, res) => {
-   
-  res.render("post/addhome",{isLoggedIn: req.isLoggedIn , userType: req.session.userType});
+  res.render("post/addhome", {
+    isLoggedIn: req.isLoggedIn,
+    userType: req.session.userType,
+  });
 };
 
 exports.editHome = (req, res) => {
@@ -12,7 +14,11 @@ exports.editHome = (req, res) => {
     if (!home) {
       return res.redirect("/host-home-list");
     } else {
-      res.render("post/edithome", { home: home , isLoggedIn: req.isLoggedIn , userType: req.session.userType});
+      res.render("post/edithome", {
+        home: home,
+        isLoggedIn: req.isLoggedIn,
+        userType: req.session.userType,
+      });
     }
   });
 };
@@ -21,9 +27,16 @@ exports.postAddhome = (req, res) => {
   const imageUrl = req.file ? req.file.path : "/images/house1.png";
   const { homeName, homeprice, homeRating, description } = req.body;
 
-  const home = new Home({ homeName, homeprice, homeRating, description, imageUrl });
+  const home = new Home({
+    homeName,
+    homeprice,
+    homeRating,
+    description,
+    imageUrl,
+  });
 
-  home.save()
+  home
+    .save()
     .then(() => {
       console.log("home added");
       res.redirect("/");
@@ -37,12 +50,22 @@ exports.postAddhome = (req, res) => {
 exports.postEditHome = (req, res) => {
   Home.findById(req.body.homeId)
     .then((home) => {
-      home.homeName = req.body.houseName,
-        home.homeprice = req.body.price,
-        home.homerating = req.body.rating,
-        home.description = req.body.description,
-        home.save().then(() => console.log("home edited"));
-      // res.render("post/host-home-list" , { isLoggedIn: req.isLoggedIn , userType: req.session.userType});
+      ((home.homeName = req.body.houseName),
+        (home.homeprice = req.body.price),
+        (home.homerating = req.body.rating),
+        (home.description = req.body.description));
+
+      if (req.file) {
+        fs.unlink(home.imageUrl, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        home.imageUrl = req.file.path;
+      }
+
+     
+      home.save().then(() => console.log("home edited"));
       res.redirect("/host/host-home-list");
     })
     .catch((err) => console.log(err));
@@ -51,8 +74,11 @@ exports.postEditHome = (req, res) => {
 exports.hosthomelist = (req, res) => {
   Home.find()
     .then((registeredHomes) => {
-      console.log(registeredHomes);
-      res.render("post/host-home-list", { homeBody: registeredHomes  , isLoggedIn: req.isLoggedIn , userType: req.session.userType});
+      res.render("post/host-home-list", {
+        homeBody: registeredHomes,
+        isLoggedIn: req.isLoggedIn,
+        userType: req.session.userType,
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -68,8 +94,7 @@ exports.postdeleteHome = (req, res) => {
       console.log("error occur while deleting home");
       return res.redirect("/host/host-home-list");
     } else {
-      
-      res.redirect("/host/host-home-list" );
+      res.redirect("/host/host-home-list");
     }
   });
 };

@@ -56,6 +56,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(multer(multerOptions).single('photo'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/host/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(
   expressSession({
