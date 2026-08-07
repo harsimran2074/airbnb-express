@@ -1,61 +1,125 @@
-<!DOCTYPE html>
+
+
+ <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Airbnb Homes</title>
 
-   <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
 
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-   <title>Airbnb Homes</title>
-
-   <link rel="stylesheet" href="/css/styles.css">
-
+  <style>
+    body{
+      background:#0f172a;
+      background-image:
+      radial-gradient(circle at top left,#2563eb25,transparent 40%),
+      radial-gradient(circle at bottom right,#9333ea25,transparent 40%);
+    }
+  </style>
 </head>
 
+<body class="min-h-screen text-white">
 
- 
-<body style="background-color: #f3f4f6; min-height: 100vh;">
 <%- include('../../partials/header') %>
-   <header class="mb-8">
 
-      <h1 >Here are our registered homes</h1>
+<main class="max-w-7xl mx-auto px-6 py-12">
 
-   </header>
-   <main class="flex flex-col items-center">
+    <!-- Hero -->
 
-   
+    <section class="text-center mb-16">
 
+        <span class="inline-block px-4 py-2 rounded-full bg-blue-500/20 border border-blue-400 text-blue-300 font-medium tracking-wide">
+            Premium Stays
+        </span>
 
+        <h1 class="mt-6 text-5xl md:text-6xl font-extrabold leading-tight">
+            Find Your
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500">
+                Dream Stay
+            </span>
+        </h1>
 
-      <ul class="w-full max-w-xl space-y-4">
+        <p class="mt-6 text-gray-400 text-lg max-w-3xl mx-auto leading-8">
+            Discover luxury homes, mountain cabins, beach villas and city apartments.
+            Carefully selected stays with modern amenities, verified ratings and unforgettable experiences.
+        </p>
 
-         <% homeBody.forEach(home => { %>
-
-            <li class="bg-white rounded-xl shadow-md p-4 border border-gray-200">
-
-           <div class="font-semibold text-lg">  <%= home.homeName %> </div>
-           <div class="text-gray-700"> <%= home.homeprice %> </div>
-           <div class="text-yellow-500"> <%= home.homeRating %> </div>
-           <div class="text-gray-700"><%= home.description %></div>
- <a href="/homes/<%= home._id %>">       
-<button type="button" style="background-color: #11a2ef; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.75rem; border: none; cursor: pointer;">Details</button>
- </a>
-<button type="button" style="background-color: #f59e0b; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.75rem; border: none; cursor: pointer;">BOOK</button>
-
-            </li>
-
-         <% }) %>
-
-      </ul>
-
-   </main>
+    </section>
 
 
+
+    <!-- Cards -->
+
+    <section class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+        <% homeBody.forEach(home=>{ %>
+
+        <div class="group overflow-hidden rounded-3xl bg-white/5 backdrop-blur-lg border border-white/10 shadow-2xl hover:border-blue-400 hover:-translate-y-3 transition duration-500">
+
+            <div class="relative overflow-hidden">
+
+                <img
+                src="<%= home.imageUrl %>"
+                class="h-64 w-full object-cover group-hover:scale-110 transition duration-700">
+
+                <div class="absolute top-4 left-4 bg-blue-600 px-3 py-1 rounded-full text-sm font-semibold">
+                    Featured
+                </div>
+
+                <div class="absolute bottom-4 right-4 bg-black/70 backdrop-blur px-3 py-1 rounded-full text-yellow-400 font-semibold">
+                    ⭐ <%= home.homeRating %>
+                </div>
+
+            </div>
+
+
+            <div class="p-6">
+
+                <div class="flex justify-between items-center">
+
+                    <h2 class="text-2xl font-bold">
+                        <%= home.homeName %>
+                    </h2>
+
+                    <span class="text-emerald-400 font-bold text-xl">
+                        ₹<%= home.homeprice %>
+                    </span>
+
+                </div>
+
+                <p class="mt-4 text-gray-400 leading-7">
+                    <%= home.description %>
+                </p>
+
+                <div class="mt-8 flex gap-4">
+
+                    <a
+                    href="/homes/<%= home._id %>"
+                    class="flex-1 bg-gradient-to-r from-blue-600 to-cyan-500 text-center py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/40 transition">
+
+                        View Details
+
+                    </a>
+
+                    <button
+                    class="px-6 rounded-xl border border-white/20 hover:bg-white hover:text-black transition">
+
+                        Book
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <% }) %>
+
+    </section>
+
+</main>
 
 </body>
-
-
-
 </html>
- 
-

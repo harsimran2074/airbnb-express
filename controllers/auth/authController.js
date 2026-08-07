@@ -4,42 +4,48 @@ const bcrypt = require("bcryptjs");
 
 
 exports.getLogin = (req, res) => {
-      isLoggedIn: req.isLoggedIn,
-  res.render("auth/login",{errors: [], oldInput: {email: ""},isLoggedIn: req.isLoggedIn});
+  res.render("auth/login", {
+    errors: [],
+    oldInput: { email: "" },
+    isLoggedIn: req.isLoggedIn,
+  });
 };
 
-exports.postLogin = async(req, res) => {
+exports.postLogin = async (req, res) => {
   const email = req.body.email;
- const user = await User.findOne({email})
-  if(!user){
-    res.status(404).render("auth/login", {errors: ["User not found"] ,isLoggedIn: req.isLoggedIn, oldInput: {email: req.body.email}});
-    
-  }else{
-   const isMatch = await bcrypt.compare(req.body.password, user.password)
-    
-  if(isMatch){
-  
+  const user = await User.findOne({ email });
 
-    req.session.isLoggedIn = true;
-    req.session.user = user;
-   req.session.save(()=>{
-    console.log("session saved");
-  res.redirect("/");
-   } );
-  
-  
-
-  }else{
-    
-    res.status(404).render("auth/login", {errors: ["incorrect password"] , oldInput: {email: req.body.email}});
-    
+  if (!user) {
+    return res.status(404).render("auth/login", {
+      errors: ["User not found"],
+      isLoggedIn: req.isLoggedIn,
+      oldInput: { email: req.body.email },
+    });
   }
-  
-}},
 
-  exports.getLogout = (req, res) => {
-    req.session.destroy(() => res.redirect("/"));
-  };
+  const isMatch = await bcrypt.compare(req.body.password, user.password);
+  if (!isMatch) {
+    return res.status(404).render("auth/login", {
+      errors: ["Incorrect password"],
+      isLoggedIn: req.isLoggedIn,
+      oldInput: { email: req.body.email },
+    });
+  }
+
+  req.session.isLoggedIn = true;
+  req.session.userType = user.userType;
+  req.session.userId = user._id.toString();
+  req.session.save((err) => {
+    if (err) {
+      console.error("Session save error:", err);
+    }
+    res.redirect("/");
+  });
+};
+
+exports.getLogout = (req, res) => {
+  req.session.destroy(() => res.redirect("/"));
+};
 
 exports.getSignUp = (req, res) => {
   res.render("auth/signup", {

@@ -8,9 +8,12 @@
       <a href="/favourite-list" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Favourite</a>
      
       <a href="/booking" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Booking</a>
+      
+
+        <% if(userType=="admin") {%>
        <a href="/host/host-home-list" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Host Homes</a>
 <a href="/host/add-home" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Add Home</a>
-
+<% } %>
 <a href="/logout" class="px-4 py-2 rounded-lg text-white font-medium hover:bg-blue-800 transition-all duration-300">Logout</a>
 <% } %>
 
